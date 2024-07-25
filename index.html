@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+  <div class="container rounded-2 w-50 bg-light mt-4 text-center  ">
+    <h1 class="p-3">Get Country Data</h1>
+    <input type="text" name="" id="cname" class="form-control p-2 mt-2"  placeholder="Country Name">
+   
+    <button onclick="search()" type="button" class="btn btn-success mt-2 mb-4 p-2">Search</button>
+  
+  </div>
+  <div id="result" class="container rounded-2 w-50 bg-light p-5 mt-2 text-center">
+
+  </div>
+  </body>
+  <script>
+    function search(){
+        country = cname.value
+        fetch(`https://restcountries.com/v2/name/${country}?fullText=true`).then(data=>data.json())
+        .then(data=>displayData(data))
+    }
+    function displayData(countryDetails){
+        countryName=countryDetails[0].name
+        capital=countryDetails[0].capital
+        population=countryDetails[0].population
+        flag=countryDetails[0].flag
+        currency=countryDetails[0].currencies[0].name
+        symbol=countryDetails[0].currencies[0].symbol
+        language=countryDetails[0].languages[0].name
+
+        result.innerHTML=`
+        <div class="card">
+          <div style="justify-content:center" class="mt-4 mb-3">  <img src="${flag}" class="card-img-top text-center" alt="flag" style="width:50%"></div
+
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Country Name:${countryName}</li>
+    <li class="list-group-item">Capital:${capital}</li>
+    <li class="list-group-item">Population:${population}</li>
+    <li class="list-group-item">Currency: ${currency}</li>
+    <li class="list-group-item">Symbol: ${symbol}</li>
+    <li class="list-group-item">Languages: ${language}</li>
+  </ul>
+ 
+</div>
+        `
+    }
+
+  </script>
+</html>
